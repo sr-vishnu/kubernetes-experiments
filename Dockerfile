@@ -2,7 +2,6 @@ FROM python:3.7
 
 RUN apt-get -y update && apt-get -y upgrade
 RUN apt-get clean
-RUN pip install pipenv
 
 ADD simple_flask_app /simple_flask_app
 ADD requirements.txt /simple_flask_app
