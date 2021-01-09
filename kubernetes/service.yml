@@ -1,0 +1,40 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: flask-service
+  labels:
+    app: flask-app
+spec:
+  type: LoadBalancer
+  ports:
+  - port: 80
+    targetPort: 5000
+    protocol: TCP
+  selector:
+    app: flask-app
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: flask-deploy
+spec:
+  replicas: 10
+  selector:
+    matchLabels:
+      app: flask-app
+  minReadySeconds: 10
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 1
+      maxSurge: 1
+  template:
+    metadata:
+      labels:
+        app: flask-app
+    spec:
+      containers:
+      - name: flask-pod
+        image: registry.hub.docker.com/bloodbug754933/kubernetes-docker-experiments:10.0
+        ports:
+        - containerPort: 5000

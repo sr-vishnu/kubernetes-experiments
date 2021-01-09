@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: random-flask-app
+spec:
+  containers:
+    - name: random-flask-container
+      image: registry.hub.docker.com/bloodbug754933/kubernetes-docker-experiments:10.0
+      ports:
+        - name: flask-port
+          containerPort: 5000
+          protocol: TCP
